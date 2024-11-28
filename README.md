@@ -1,38 +1,50 @@
-# sv
+# Media Queries vs Container Queries
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+This page demonstrates the difference between Media Queries and Container Queries. It was built with Svelte and hosted on Vercel.
 
-## Creating a project
+## Page Content
 
-If you're seeing this, you've probably already done this step. Congrats!
+The page contains two containers:
 
-```bash
-# create a new project in the current directory
-npx sv create
+1. **Media Queries Container**: This container changes its layout based on the width of the viewport.
+2. **Container Queries Container**: This container changes its layout based on the width of the container.
 
-# create a new project in my-app
-npx sv create my-app
-```
+A slider allows the user to change the width of the container and observe the differences between the two approaches.
 
-## Developing
+### Differences between Media Queries and Container Queries
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+- **Media Queries**:
+  - Change the layout based on the width of the viewport.
+  - Useful for global layout changes.
 
-```bash
-npm run dev
+- **Container Queries**:
+  - Change the layout based on the width of the container.
+  - Useful for components that need to adapt dynamically.
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+## Building the Page
 
-## Building
+### Svelte
 
-To create a production version of your app:
+The page was built using the Svelte framework. Svelte is a modern JavaScript framework for building reactive user interfaces.
 
-```bash
-npm run build
-```
+### Vercel
 
-You can preview the production build with `npm run preview`.
+The page is hosted on Vercel. Vercel is a platform for hosting static sites and serverless functions.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+## Code Structure
+
+### `+page.svelte`
+
+This is the main file of the page. It contains the HTML, CSS, and JavaScript code that defines the page.
+
+#### HTML
+
+The HTML part of the file contains the structure of the page, including the two containers and the slider.
+
+#### CSS
+
+The CSS part of the file contains the styles for the page, including the Media Queries and Container Queries.
+
+#### JavaScript
+
+The JavaScript part of the file contains the logic for the slider that changes the width of the container.
