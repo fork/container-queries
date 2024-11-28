@@ -3,31 +3,14 @@
 </script>
 
 <div class="wrapper">
-  <h1>Container Query Demo</h1>
+  <h1>Media Queries vs Container Queries</h1>
   <p class="breakpoints">
     Ziehe den Schieberegler, um die Breite des Containers zu ändern. Beachte die
-    drastischen Änderungen ab 500px und 700px!
+    Unterschiede zwischen Media Queries und Container Queries!
   </p>
 
-  <!-- Container mit anpassbarem Inhalt -->
-  <div class="container" style="--container-width: {containerWidth}px">
-    <div class="content">
-      <h2>Flexible Layouts mit Container Queries</h2>
-      <p>
-        Dieses Layout zeigt sich dynamisch bei unterschiedlichen
-        Container-Breiten.
-      </p>
-
-      <!-- Beispielbilder, die sich je nach Breakpoint verändern -->
-      <img src="/image1.png" alt="Beispielbild 1" />
-      <img src="/image2.png" alt="Beispielbild 2" />
-
-      <p>Zusätzliche Änderungen werden ab bestimmten Breiten aktiv!</p>
-    </div>
-  </div>
-
   <!-- Schieberegler zur Änderung der Breite des Containers -->
-  <div style="margin-top: 1.5rem;">
+  <div class="slider">
     <label for="container-width">Container Width: {containerWidth}px</label>
     <input
       id="container-width"
@@ -37,6 +20,40 @@
       bind:value={containerWidth}
       style="width: 100%; max-width: 400px; margin-top: 0.5rem;"
     />
+  </div>
+
+  <!-- Flexbox-Container für die beiden Container -->
+  <div class="container-wrapper">
+    <!-- Container mit Media Queries -->
+    <div class="container media-query">
+      <div class="content">
+        <h2>Media Queries</h2>
+        <p>Dieses Layout ändert sich basierend auf der Breite des Viewports.</p>
+
+        <!-- Beispielbilder, die sich je nach Breakpoint verändern -->
+        <img src="/image1.png" alt="Beispielbild 1" />
+        <img src="/image2.png" alt="Beispielbild 2" />
+
+        <p>Zusätzliche Änderungen werden ab bestimmten Breiten aktiv!</p>
+      </div>
+    </div>
+
+    <!-- Container mit Container Queries -->
+    <div class="container" style="--container-width: {containerWidth}px">
+      <div class="content">
+        <h2>Container Queries</h2>
+        <p>
+          Dieses Layout zeigt sich dynamisch bei unterschiedlichen
+          Container-Breiten.
+        </p>
+
+        <!-- Beispielbilder, die sich je nach Breakpoint verändern -->
+        <img src="/image1.png" alt="Beispielbild 1" />
+        <img src="/image2.png" alt="Beispielbild 2" />
+
+        <p>Zusätzliche Änderungen werden ab bestimmten Breiten aktiv!</p>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -74,6 +91,13 @@
     margin: 1rem 0;
   }
 
+  .container-wrapper {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
   /* Container-Stile */
   .container {
     border: 2px solid #666;
@@ -82,11 +106,14 @@
     overflow: auto;
     width: var(--container-width, 400px);
     max-width: 100%;
-    margin: 0 auto;
     container-type: inline-size;
     border-radius: 8px;
     background-color: #ecebe0; /* Standardfarbe */
     transition: all 0.5s ease;
+  }
+
+  .container.media-query {
+    width: 400px; /* Feste Breite für den Media Query Container */
   }
 
   /* Inhalt-Stile */
@@ -105,22 +132,27 @@
     transition: opacity 0.5s ease;
   }
 
-  /* Breakpoint ab 500px */
-  @container (min-width: 500px) {
-    .container {
+  .slider {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Media Queries */
+  @media (min-width: 500px) {
+    .container.media-query {
       background-color: #ff562c;
-      border: 2px solid #ff562c;
+      border-color: #ff562c;
       transform: scale(1.05); /* Leichtes Vergrößern */
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
 
-    .content {
+    .container.media-query .content {
       padding: 2rem;
       font-size: 1.5rem;
       color: #ff562c;
     }
 
-    .content img {
+    .container.media-query .content img {
       width: 100%;
       max-width: 200px;
       border-radius: 10px;
@@ -129,22 +161,71 @@
     }
   }
 
-  /* Breakpoint ab 700px */
-  @container (min-width: 700px) {
-    .container {
+  @media (min-width: 700px) {
+    .container.media-query {
+      margin-top: 3.5rem;
       background-color: #ffb84c;
-      border: 3px dashed #ff562c;
+      border-color: #ff562c;
+      border-width: 3px;
+      border-style: dashed;
       transform: scale(1.1); /* Weitere Vergrößerung */
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     }
 
-    .content {
+    .container.media-query .content {
       padding: 3rem;
       font-size: 1.8rem;
       color: #7d791f;
     }
 
-    .content img {
+    .container.media-query .content img {
+      width: 100%;
+      max-width: 300px;
+      opacity: 1;
+    }
+  }
+
+  /* Container Queries */
+  @container (min-width: 500px) {
+    .container:not(.media-query) {
+      background-color: #ff562c;
+      border-color: #ff562c;
+      transform: scale(1.05); /* Leichtes Vergrößern */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .container:not(.media-query) .content {
+      padding: 2rem;
+      font-size: 1.5rem;
+      color: #ff562c;
+    }
+
+    .container:not(.media-query) .content img {
+      width: 100%;
+      max-width: 200px;
+      border-radius: 10px;
+      margin-top: 1rem;
+      transition: opacity 0.5s ease;
+    }
+  }
+
+  @container (min-width: 700px) {
+    .container:not(.media-query) {
+      background-color: #ffb84c;
+      border-color: #ff562c;
+      border-width: 3px;
+      border-style: dashed;
+      transform: scale(1.1); /* Weitere Vergrößerung */
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .container:not(.media-query) .content {
+      padding: 3rem;
+      font-size: 1.8rem;
+      color: #7d791f;
+    }
+
+    .container:not(.media-query) .content img {
       width: 100%;
       max-width: 300px;
       opacity: 1;
